@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقع القرآن الكريم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&family=Marhey:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ===== الألوان والأساسيات (يمكنك تعديلها بسهولة) ===== */
+:root{
+  --main:#5c6e58;
+  --main-dark:#3f4d3e;
+  --accent:#d8c9a3;
+  --bg:#f8f4ea;
+  --card:#fffdf7;
+  --text:#33302a;
+  --font-main:'Amiri',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-main)}
+body{background:var(--bg);color:var(--text);line-height:1.8}
+header{background:linear-gradient(135deg,var(--main),var(--main-dark));color:#fff;text-align:center;padding:35px 15px}
+header h1{font-size:2.6rem;color:var(--accent)}
+header p{opacity:.9}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;background:var(--main-dark);padding:12px;position:sticky;top:0;z-index:10}
+nav button{background:#d8c9a3;border:1px solid #c4b088;color:#4a3f28;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:1rem;transition:.3s}
+nav button:hover,nav button.active{background:#b8a878;color:#fff}
+main{max-width:1000px;margin:30px auto;padding:0 15px}
+section{display:none;animation:fade .4s}
+section.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+h2{color:var(--main);border-bottom:2px solid var(--accent);padding-bottom:8px;margin-bottom:20px;text-align:center}
+.card{background:var(--card);border:1px solid #e8dfc8;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+input,select{width:100%;padding:10px;border:1px solid #d8c9a3;border-radius:10px;margin:8px 0;font-size:1rem;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:15px}
+.sura{background:#ffffff;color:#111111;border-bottom:1px dotted #999;padding:10px 6px;cursor:pointer;transition:.3s;display:flex;justify-content:space-between;font-size:1.15rem}
+.sura:hover{background:#efe6d2;color:#000;padding-right:14px}
+.sura span{color:#555;font-size:.9rem}
+#surasGrid{display:grid;grid-template-columns:1fr;margin-top:15px}
+.list-item{background:var(--card);border-right:4px solid var(--accent);padding:12px 16px;margin:10px 0;border-radius:8px}
+.counter{display:inline-block;background:var(--accent);color:var(--main-dark);border-radius:20px;padding:2px 12px;margin-bottom:6px;font-size:.85rem}
+#ayahText{font-size:1.6rem;line-height:2.4;text-align:center}
+footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;margin-top:40px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;margin-top:10px}
+.cal-grid div{padding:10px;background:var(--card);border-radius:8px}
+.cal-grid .day{background:var(--main);color:#fff;font-weight:bold}
+.cal-grid .today{background:var(--accent);color:var(--main-dark);font-weight:bold}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>﷽</h1>
+  <h1>موقع القرآن الكريم وأذكاره</h1>
+  <p style="font-size:1.3rem;margin-top:8px;color:var(--accent)">﴿ وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ ﴾</p>
+  <p>القرآن • الأذكار • الحديث • التقويم</p>
+</header>
+
+<nav>
+  <button class="active" onclick="show('quran',this)">📖 القرآن الكريم</button>
+  <button onclick="show('athkar',this)">📿 الأذكار</button>
+  <button onclick="show('hadith',this)">🕋 الأحاديث</button>
+  <button onclick="show('calendar',this)">📅 التقويم</button>
+  <button onclick="show('qibla',this)">🧭 القبلة</button>
+  <button onclick="show('settings',this)">⚙️ الإعدادات</button>
+</nav>
+
+<main>
+
+<!-- سور القرآن -->
+<section id="quran" class="active">
+  <h2>سور القرآن الكريم</h2>
+  <input type="text" id="searchSura" placeholder="🔍 ابحث عن سورة..." oninput="filterSuras()">
+  <div class="card" style="margin:20px 0" id="suraCard">
+    <h3 id="suraTitle" style="text-align:center;color:var(--main)">اختر سورة لعرض آياتها</h3>
+    <p id="ayahText"></p>
+  </div>
+<div id="tafsirBar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--main-dark);color:#fff;padding:14px 20px;text-align:center;z-index:99;box-shadow:0 -3px 10px rgba(0,0,0,.3)" onmouseleave="hideTafsir()"><b>📖 الشرح: </b><span id="tafsirText"></span></div>
+  <div class="grid" id="surasGrid"></div>
+</section>
+
+<!-- الأذكار -->
+<section id="athkar">
+  <h2>أذكار الصباح والمساء</h2>
+  <h3 style="color:var(--main)">☀️ أذكار الصباح</h3>
+  <div class="list-item"><span class="counter">3 مرات</span><br>سُبْحَانَ اللهِ وَبِحَمْدِهِ</div>
+  <div class="list-item"><span class="counter">10 مرات</span><br>لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ</div>
+  <div class="list-item"><span class="counter">مرة</span><br>اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ</div>
+  <div class="list-item"><span class="counter">مرة</span><br>أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ</div>
+  <div class="list-item"><span class="counter">مرة</span><br>آية الكرسي: اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...</div>
+  <h3 style="color:var(--main);margin-top:20px">🌙 أذكار المساء</h3>
+  <div class="list-item"><span class="counter">3 مرات</span><br>سُبْحَانَ اللهِ وَبِحَمْدِهِ</div>
+  <div class="list-item"><span class="counter">مرة</span><br>اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ</div>
+  <div class="list-item"><span class="counter">مرة</span><br>أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ</div>
+  <div class="list-item"><span class="counter">10 مرات</span><br>أَسْتَغْفِرُ اللهَ وَأَتُوبُ إِلَيْهِ</div>
+</section>
+
+<!-- الأحاديث -->
+<section id="hadith">
+  <h2>أحاديث صحيحة</h2>
+  <div class="list-item">"إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى" — <b>متفق عليه</b></div>
+  <div class="list-item">"من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت" — <b>متفق عليه</b></div>
+  <div class="list-item">"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه" — <b>متفق عليه</b></div>
+  <div class="list-item">"النظافة من الإيمان" — <b>صحيح مسلم</b></div>
+  <div class="list-item">"تبسمك في وجه أخيك صدقة" — <b>الترمذي</b></div>
+  <div class="list-item">"خيركم من تعلم القرآن وعلمه" — <b>البخاري</b></div>
+</section>
+
+<!-- التقويم -->
+<section id="calendar">
+  <h2>التقويم الهجري والميلادي</h2>
+  <div class="card">
+    <h3 id="hijriDate" style="text-align:center;color:var(--main)"></h3>
+    <h3 id="gregDate" style="text-align:center"></h3>
+  </div>
+  <div class="cal-grid" id="calGrid"></div>
+</section>
+
+<!-- القبلة -->
+<section id="qibla">
+  <h2>بوصلة القبلة</h2>
+  <div class="card" style="text-align:center">
+    <div id="compass" style="font-size:120px;transition:transform .3s">🧭</div>
+    <p id="qiblaInfo">اضغط الزر لمعرفة اتجاه القبلة</p>
+    <button onclick="getQibla()" style="background:var(--main);color:#fff;border:none;padding:10px 25px;border-radius:25px;cursor:pointer;font-size:1.1rem">تحديد الاتجاه</button>
+  </div>
+</section>
+
+<!-- الإعدادات -->
+<section id="settings">
+  <h2>الإعدادات</h2>
+  <div class="card">
+    <label><b>🔤 نوع الخط:</b></label>
+    <select id="fontSelect" onchange="changeFont()">
+      <option value="'Amiri',serif">خط أميري (عثماني جميل)</option>
+      <option value="'Aref Ruqaa',serif">خط رقعة</option>
+      <option value="'Cairo',sans-serif">خط القاهرة</option>
+      <option value="'Tajawal',sans-serif">خط تجوال</option>
+      <option value="'Marhey',cursive">خط مرحي</option>
+    </select>
+    <label><b>🔠 حجم الخط:</b></label>
+    <div style="display:flex;gap:10px;margin:8px 0">
+      <button onclick="changeSize(2)" style="flex:1;padding:8px;border-radius:10px;border:1px solid #ccc;cursor:pointer">A+ تكبير</button>
+      <button onclick="changeSize(-2)" style="flex:1;padding:8px;border-radius:10px;border:1px solid #ccc;cursor:pointer">A- تصغير</button>
+    </div>
+    <label><b>🎨 لون رئيسي:</b></label>
+    <input type="color" id="colorMain" value="#5c6e58" onchange="document.documentElement.style.setProperty('--main',this.value)">
+    <label><b>✨ لون التمييز:</b></label>
+    <input type="color" id="colorAccent" value="#d8c9a3" onchange="document.documentElement.style.setProperty('--accent',this.value)">
+    <label><b>🖼️ لون الخلفية:</b></label>
+    <input type="color" id="colorBg" value="#f8f4ea" onchange="document.documentElement.style.setProperty('--bg',this.value)">
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>صُنع بحب ❤️ | موقع القرآن الكريم</p>
+  <p style="font-weight:300;font-size:.85rem;opacity:.7">المخرج: عبدالعظيم ياسين</p>
+</footer>
+
+<script>
+/* ===== قائمة السور ===== */
+const suras = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس",
+"هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون",
+"النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر",
+"يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح",
+"الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة",
+"الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن",
+"المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين",
+"الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين",
+"العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون",
+"الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+
+const suraTexts = {
+  "الفاتحة": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+  "الإخلاص": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nقُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ\nلَمْ يَلِدْ وَلَمْ يُولَدْ\nوَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ"
+};
+
+/* ===== التبديل بين الأقسام ===== */
+function show(id,btn){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ===== عرض السور ===== */
+const grid=document.getElementById('surasGrid');
+suras.forEach((s,i)=>{
+  const d=document.createElement('div');
+  d.className='sura'; d.innerHTML=`${s}<span>رقم ${i+1}</span>`;
+  d.onclick=()=>loadSura(i+1,s);
+  grid.appendChild(d);
+});
+function filterSuras(){
+  const q=document.getElementById('searchSura').value;
+  document.querySelectorAll('.sura').forEach(el=>el.style.display=el.textContent.includes(q)?'flex':'none');
+}
+
+/* ===== تغيير الخط ===== */
+function changeFont(){document.documentElement.style.setProperty('--font-main',document.getElementById('fontSelect').value);}
+
+/* ===== التقويم ===== */
+function buildCalendar(){
+  const now=new Date();
+  document.getElementById('hijriDate').textContent='📅 '+now.toLocaleDateString('ar-SA-u-ca-islamic',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('gregDate').textContent='🗓️ '+now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const year=now.getFullYear(),month=now.getMonth();
+  const first=new Date(year,month,1).getDay();
+  const days=new Date(year,month+1,0).getDate();
+  const names=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+  let html=names.map(n=>`<div class="day">${n}</div>`).join('');
+  for(let i=0;i<first;i++)html+='<div></div>';
+  for(let d=1;d<=days;d++)html+=`<div class="${d===now.getDate()?'today':''}">${d}</div>`;
+  document.getElementById('calGrid').innerHTML=html;
+}
+/* ===== تحميل كل آيات السورة من الإنترنت ===== */
+async function loadSura(num,name){
+  document.getElementById('suraTitle').textContent='سورة '+name;
+  document.getElementById('ayahText').textContent='⏳ جاري تحميل الآيات...';
+  document.getElementById('suraCard').scrollIntoView({behavior:'smooth'});
+  try{
+    const r=await fetch('https://api.alquran.cloud/v1/surah/'+num+'/ar.alafasy');
+    const d=await r.json();
+    document.getElementById('ayahText').innerHTML=d.data.ayahs.map(a=>`<span style="cursor:pointer" onclick="getTafsir(${a.number})" title="اضغط لعرض الشرح">${a.text} <b style="color:var(--main)">﴿${a.numberInSurah}﴾</b></span>`).join(' ');
+    document.getElementById('suraTitle').textContent='سورة '+name+' — (اضغط على أي آية لعرض شرحها)';
+  }catch(e){
+    document.getElementById('ayahText').textContent=suraTexts[name]||'تعذر التحميل - تأكد من اتصالك بالإنترنت';
+  }
+}
+
+/* ===== تفسير الآية عند الضغط عليها ===== */
+async function getTafsir(num){
+  const bar=document.getElementById('tafsirBar');
+  bar.style.display='block';
+  document.getElementById('tafsirText').textContent='⏳ جاري التحميل...';
+  try{
+    const r=await fetch('https://api.alquran.cloud/v1/ayah/'+num+'/ar.jalalayn');
+    const d=await r.json();
+    document.getElementById('tafsirText').textContent=d.data.text;
+    clearTimeout(tafsirTimer);
+    tafsirTimer=setTimeout(hideTafsir,10000);
+  }catch(e){document.getElementById('tafsirText').textContent='تعذر تحميل التفسير';}
+}
+let tafsirTimer;
+function hideTafsir(){document.getElementById('tafsirBar').style.display='none';}
+
+/* ===== حجم الخط ===== */
+let fontSize=100;
+function changeSize(n){
+  fontSize=Math.min(160,Math.max(70,fontSize+n*5));
+  document.body.style.fontSize=fontSize+'%';
+}
+
+/* ===== بوصلة القبلة ===== */
+function getQibla(){
+  if(!navigator.geolocation){document.getElementById('qiblaInfo').textContent='المتصفح لا يدعم تحديد الموقع';return;}
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat1=pos.coords.latitude*Math.PI/180, lon1=pos.coords.longitude*Math.PI/180;
+    const lat2=21.4225*Math.PI/180, lon2=39.8262*Math.PI/180;
+    const y=Math.sin(lon2-lon1)*Math.cos(lat2);
+    const x=Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1);
+    const brng=(Math.atan2(y,x)*180/Math.PI+360)%360;
+    document.getElementById('compass').style.transform=`rotate(${brng}deg)`;
+    document.getElementById('qiblaInfo').textContent='اتجاه القبلة: '+Math.round(brng)+'° (السهم يشير للقبلة)';
+  },()=>document.getElementById('qiblaInfo').textContent='تعذر تحديد الموقع - اسمح بالوصول للموقع');
+}
+
+buildCalendar();
+</script>
+</body>
+</html>
