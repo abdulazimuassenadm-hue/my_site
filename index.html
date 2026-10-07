@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>موقع القرآن الكريم</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#5c6e58">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&family=Marhey:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -160,6 +162,7 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 </footer>
 
 <script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 /* ===== قائمة السور ===== */
 const suras = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس",
 "هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون",
