@@ -50,6 +50,17 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 .cal-grid .today{background:var(--accent);color:var(--main-dark);font-weight:bold}
 @media (max-width:600px){body{font-size:92%}header{padding:20px 10px}header h1{font-size:1.8rem}nav{padding:8px}nav button{padding:6px 12px;font-size:.85rem}main{margin:15px auto;padding:0 10px}.card{padding:12px}#splash img{width:85%!important;max-width:85%}}
 </style>
+<script>
+(function(){
+ var V='7b613d5';
+ if(localStorage.getItem('rawdatVer')!==V){
+ localStorage.setItem('rawdatVer',V);
+ if('serviceWorker' in navigator){ navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister();}); location.reload();}); return; }
+ location.reload();
+ }
+})();
+</script>
+</head>
 <body>
 
 <!-- شاشة البداية -->
