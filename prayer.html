@@ -89,9 +89,13 @@ async function fetchTimes(lat,lng){
       const rg=await Promise.race([fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat="+lat+"&lon="+lng+"&accept-language=ar&zoom=10"), new Promise(function(_,rej){setTimeout(function(){rej(new Error("t"));},5000);})]);
       const rj=await Promise.race([rg.json(), new Promise(function(_,rej){setTimeout(function(){rej(new Error("t"));},5000);})]);
       const a=rj.address||{};
-      const n=a.state||a.province||a.region||a.city||a.town||a.county||"";
-      const c=a.country||"";
-      place=(n?n+", ":"")+c;
+      const state=a.state||a.province||a.region||"";
+      const city=a.city||a.town||a.village||a.hamlet||a.suburb||a.county||"";
+      const country=a.country||"";
+      const parts=[country,state,city].filter(function(x){return Boolean(x);});
+      const uniq=[];
+      parts.forEach(function(x){if(uniq.indexOf(x)<0)uniq.push(x);});
+      place=uniq.join(", ");
     } catch(e){ place=""; }
     const el=document.getElementById("locInfo");
     if (el) { if (place) { el.textContent=place; try{base.place=place;localStorage.setItem("prayerBase",JSON.stringify(base));}catch(e){} } else { el.textContent=(lat.toFixed(4)+", "+lng.toFixed(4)); } }
