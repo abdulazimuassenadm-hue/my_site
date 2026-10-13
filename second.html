@@ -68,17 +68,20 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 
 <nav>
   <button class="active" onclick="location.href='second.html'">☰ الأقسام (صفحة 2)</button>
-  <button class="active" onclick="show('prayer',this)">🕌 أوقات الصلاة (الصفحة 1)</button>
-  <button onclick="show('quran',this)">📖 القرآن الكريم</button>
-  <button onclick="show('prayer',this)">🕌 أوقات الصلاة</button>
-  <button onclick="show('athkar',this)">📿 الأذكار</button>
-  <button onclick="show('hadith',this)">🕋 الأحاديث</button>
-  <button onclick="show('calendar',this)">📅 التقويم</button>
-  <button onclick="show('qibla',this)">🧭 القبلة</button>
-  <button onclick="show('settings',this)">⚙️ الإعدادات</button>
 </nav>
+<div class="card" style="margin:10px 0">
+  <h3 style="text-align:center;color:var(--main)">فهرس الأقسام</h3>
+  <div style="display:grid;grid-template-columns:1fr;gap:8px">
+    <button class="active" onclick="show('quran',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333">📖 Quran - القرآن الكريم</button>
+    <button onclick="show('prayer',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333">🕌 Prayer - أوقات الصلاة</button>
+    <button onclick="show('athkar',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333">📿 Azkar - الأذكار</button>
+    <button onclick="show('hadith',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333"> decking Hadith - الأحاديث</button>
+    <button onclick="show('calendar',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333"> decking Calendar - التقويم</button>
+    <button onclick="show('qibla',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333"> decking Qibla - القبلة</button>
+    <button onclick="show('settings',this)" style="width:100%;border-radius:10px;padding:10px;background:#efe6d2;color:#333">⚙️ Settings - الإعدادات</button>
+  </div>
+</div>
 
-<main>
 
 <!-- سور القرآن -->
 <section id="quran" class="active">
