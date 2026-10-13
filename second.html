@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>روضة الإيمان — الأقسام</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#5c6e58">
+<meta name="theme-color" content="#4a6c6f">
 <link rel="apple-touch-icon" sizes="180x180" href="icon192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&family=Marhey:wght@400;600&display=swap" rel="stylesheet">
 <style>
 /* ===== الألوان والأساسيات (يمكنك تعديلها بسهولة) ===== */
 :root{
-  --main:#5c6e58;
-  --main-dark:#3f4d3e;
-  --accent:#d8c9a3;
-  --bg:#f8f4ea;
-  --card:#fffdf7;
-  --text:#33302a;
+  --main:#4a6c6f;
+  --main-dark:#334a4d;
+  --accent:#c2a676;
+  --bg:#f6f4ef;
+  --card:#ffffff;
+  --text:#2f3a3c;
   --font-main:'Amiri',serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-main)}
@@ -26,19 +26,19 @@ header{background:linear-gradient(135deg,var(--main),var(--main-dark));color:#ff
 header h1{font-size:2.6rem;color:var(--accent)}
 header p{opacity:.9}
 nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;background:var(--main-dark);padding:12px;position:sticky;top:0;z-index:10}
-nav button{background:#d8c9a3;border:1px solid #c4b088;color:#4a3f28;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:1rem;transition:.3s}
-nav button:hover,nav button.active{background:#b8a878;color:#fff}
+nav button{background:#c2a676;border:1px solid #b5985f;color:#4a3f28;padding:8px 18px;border-radius:25px;cursor:pointer;font-size:1rem;transition:.3s}
+nav button:hover,nav button.active{background:#a88d5b;color:#fff}
 main{max-width:1000px;margin:30px auto;padding:0 15px}
 section{display:none;animation:fade .4s}
 section.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
 h2{color:var(--main);border-bottom:2px solid var(--accent);padding-bottom:8px;margin-bottom:20px;text-align:center}
-.card{background:var(--card);border:1px solid #e8dfc8;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-input,select{width:100%;padding:10px;border:1px solid #d8c9a3;border-radius:10px;margin:8px 0;font-size:1rem;background:#fff}
+.card{background:var(--card);border:1px solid #e3dccd;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+input,select{width:100%;padding:10px;border:1px solid #c2a676;border-radius:10px;margin:8px 0;font-size:1rem;background:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:15px}
 .sura{background:#ffffff;color:#111111;border-bottom:1px dotted #999;padding:10px 6px;cursor:pointer;transition:.3s;display:flex;justify-content:space-between;font-size:1.15rem}
-.sura:hover{background:#efe6d2;color:#000;padding-right:14px}
-.sura span{color:#555;font-size:.9rem}
+.sura:hover{background:#ece4d5;color:#000;padding-right:14px}
+.sura span{color:#55626a;font-size:.9rem}
 #surasGrid{display:grid;grid-template-columns:1fr;margin-top:15px}
 .list-item{background:var(--card);border-right:4px solid var(--accent);padding:12px 16px;margin:10px 0;border-radius:8px}
 .counter{display:inline-block;background:var(--accent);color:var(--main-dark);border-radius:20px;padding:2px 12px;margin-bottom:6px;font-size:.85rem}
@@ -52,14 +52,14 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 </style>
 <body>
 <p style="text-align:center;padding:6px">
-  <button onclick="location.href='index.html'" style="position:fixed;top:14px;right:14px;z-index:1001;background:#d8c9a3;border:1px solid #c4b088;color:#4a3f28;border-radius:25px;padding:8px 14px;cursor:pointer;font-size:1rem;box-shadow:0 2px 8px rgba(0,0,0,.15)">‹ رجوع</button>
+  <button onclick="location.href='index.html'" style="position:fixed;top:14px;right:14px;z-index:1001;background:#c2a676;border:1px solid #b5985f;color:#4a3f28;border-radius:25px;padding:8px 14px;cursor:pointer;font-size:1rem;box-shadow:0 2px 8px rgba(0,0,0,.15)">‹ رجوع</button>
 </p>
-<p style="text-align:center;background:#3f4d3e;padding:8px"><a href="index.html" style="color:#d8c9a3;text-decoration:none">‹ رجوع للصفحة الأولى (Prayer / Adhan)</a></p
+<p style="text-align:center;background:#334a4d;padding:8px"><a href="index.html" style="color:#c2a676;text-decoration:none">‹ رجوع للصفحة الأولى (Prayer / Adhan)</a></p
 
 <!-- شاشة البداية -->
 <div id="splash" style="position:fixed;inset:0;background:#3b5a6b;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s">
   <img src="cover.png?v=2" style="width:70%;max-width:340px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.4)">
-  <p style="color:#e8dfc8;margin-top:18px;font-size:1.3rem;font-weight:300">المخرج: عبدالعظيم ياسين</p>
+  <p style="color:#e3dccd;margin-top:18px;font-size:1.3rem;font-weight:300">المخرج: عبدالعظيم ياسين</p>
 </div>
 <script>setTimeout(()=>{document.getElementById('splash').style.opacity='0';setTimeout(()=>document.getElementById('splash').remove(),1000)},2500);</script>
 
@@ -76,13 +76,13 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 <div class="card" style="margin:6px 0;padding:10px">
   <h3 style="text-align:center;color:var(--main)">فهرس الأقسام</h3>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-    <button class="active" onclick="show('quran',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333">📖 Quran - القرآن الكريم</button>
-    <button onclick="show('prayer',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333">🕌 أوقات الصلاة</button>
-    <button onclick="show('athkar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333">📿 Azkar - الأذكار</button>
-    <button onclick="show('hadith',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333"> decking Hadith - الأحاديث</button>
-    <button onclick="show('calendar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333"> decking Calendar - التقويم</button>
-    <button onclick="show('qibla',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333"> decking Qibla - القبلة</button>
-    <button onclick="show('settings',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#efe6d2;color:#333">⚙️ Settings - الإعدادات</button>
+    <button class="active" onclick="show('quran',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333">📖 Quran - القرآن الكريم</button>
+    <button onclick="show('prayer',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333">🕌 أوقات الصلاة</button>
+    <button onclick="show('athkar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333">📿 Azkar - الأذكار</button>
+    <button onclick="show('hadith',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333"> decking Hadith - الأحاديث</button>
+    <button onclick="show('calendar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333"> decking Calendar - التقويم</button>
+    <button onclick="show('qibla',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333"> decking Qibla - القبلة</button>
+    <button onclick="show('settings',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#ece4d5;color:#333">⚙️ Settings - الإعدادات</button>
   </div>
 </div>
 
@@ -120,7 +120,7 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 </div>
 <div class="card">
   <h2>ضبط لكل صلاة</h2>
-  <p style="text-align:center;font-size:.9rem;color:#555">التعديل على الأذان (دقائق) | التأخير/الإقامة (دقائق)</p>
+  <p style="text-align:center;font-size:.9rem;color:#55626a">التعديل على الأذان (دقائق) | التأخير/الإقامة (دقائق)</p>
   <div id="config"></div>
   <p style="text-align:center;margin-top:14px">
     <button onclick="saveSettings()">حفظ الإعدادات</button>
@@ -132,7 +132,7 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
   <input id="audioUrl" style="width:100%" placeholder="https://...mp3" />
   <button class="alt" onclick="applyUrl()">تطبيق/حفظ رابط</button>
 </div>
-<p style="text-align:center;margin-top:18px"><a href="index.html" style="color:#5c6e58">‹ العودة للصفحة الرئيسية</a></p>
+<p style="text-align:center;margin-top:18px"><a href="index.html" style="color:#4a6c6f">‹ العودة للصفحة الرئيسية</a></p>
 <script>
 const KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
 const NAMES={Fajr:'الفجر',Dhuhr:'الظهر',Asr:'العصر',Maghrib:'المغرب',Isha:'العشاء'};
@@ -529,11 +529,11 @@ if(!base){ detectLocation(); }
       <button onclick="changeSize(-2)" style="flex:1;padding:8px;border-radius:10px;border:1px solid #ccc;cursor:pointer">A- تصغير</button>
     </div>
     <label><b>🎨 لون رئيسي:</b></label>
-    <input type="color" id="colorMain" value="#5c6e58" onchange="document.documentElement.style.setProperty('--main',this.value)">
+    <input type="color" id="colorMain" value="#4a6c6f" onchange="document.documentElement.style.setProperty('--main',this.value)">
     <label><b>✨ لون التمييز:</b></label>
-    <input type="color" id="colorAccent" value="#d8c9a3" onchange="document.documentElement.style.setProperty('--accent',this.value)">
+    <input type="color" id="colorAccent" value="#c2a676" onchange="document.documentElement.style.setProperty('--accent',this.value)">
     <label><b>🖼️ لون الخلفية:</b></label>
-    <input type="color" id="colorBg" value="#f8f4ea" onchange="document.documentElement.style.setProperty('--bg',this.value)">
+    <input type="color" id="colorBg" value="#f6f4ef" onchange="document.documentElement.style.setProperty('--bg',this.value)">
   </div>
 </section>
 
