@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أوقات الصلاة - ضبط</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+body{background:#f8f4ea;color:#333;line-height:1.8;padding:18px}
+h1,h2{color:#5c6e58;text-align:center;margin:18px 0}
+.card{background:#fffdf7;border:1px solid #e8dfc8;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+table{width:100%;border-collapse:collapse;text-align:center;margin:10px 0}
+th,td{border:1px solid #e8dfc8;padding:8px}
+th{background:#5c6e58;color:#fff}
+input{width:70px;padding:4px;border:1px solid #ccc;border-radius:8px;text-align:center}
+button{background:#5c6e58;color:#fff;border:none;padding:10px 18px;border-radius:20px;cursor:pointer;margin:8px 4px;font-size:1rem}
+button.alt{background:#d8c9a3;color:#333}
+small{color:#777}
+.ok{color:#2e7d32;font-weight:bold}
+.warn{color:#c62828;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🕌 أوقات الصلاة - الضبط (أذان إلكتروني + إقامة)</h1>
+<div class="card">
+  <h2>الموقع</h2>
+  <p id="locInfo">لم يُحدد موقع بعد.</p>
+  <button onclick="detectLocation()">تحديد موقع الجهاز (GPS)</button>
+  <button class="alt" onclick="useDefault()">استخدام مكة (افتراضي)</button>
+</div>
+<div class="card">
+  <h2>أوقات اليوم (مع التعديل)</h2>
+  <table id="timesTable"></table>
+  <audio id="adhanAudio" src="https://www.islamcan.com/audio/adhan/azan1.mp3" preload="auto"></audio>
+  <p style="margin-top:10px;text-align:center">
+    <button onclick="testSound()">اختبار صوت المؤذن</button>
+    <button class="alt" onclick="enableAuto()">تمكين الأذان تلقائياً</button>
+  </p>
+  <p id="soundStatus" style="text-align:center"></p>
+</div>
+<div class="card">
+  <h2>ضبط لكل صلاة</h2>
+  <p style="text-align:center;font-size:.9rem;color:#555">التعديل على الأذان (دقائق) | التأخير/الإقامة (دقائق)</p>
+  <div id="config"></div>
+  <p style="text-align:center;margin-top:14px">
+    <button onclick="saveSettings()">حفظ الإعدادات</button>
+  </p>
+  <p id="saveStatus" style="text-align:center"></p>
+</div>
+<div class="card">
+  <h2>رابط صوت المؤذن</h2>
+  <input id="audioUrl" style="width:100%" placeholder="https://...mp3" />
+  <button class="alt" onclick="applyUrl()">تطبيق/حفظ رابط</button>
+</div>
+<p style="text-align:center;margin-top:18px"><a href="index.html" style="color:#5c6e58">‹ العودة للصفحة الرئيسية</a></p>
+<script>
+const KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+const NAMES={Fajr:'الفجر',Dhuhr:'الظهر',Asr:'العصر',Maghrib:'المغرب',Isha:'العشاء'};
+let base=null;
+let settings=JSON.parse(localStorage.getItem('prayerSettings')||'null')||{adhanOffset:{},iqamaDelay:{},autoAdhan:false,audioUrl:''};
+let lastCheckDate=null, lastPlayed={};
+
+function ensureSettings(){
+  settings.adhanOffset=settings.adhanOffset||{};
+  settings.iqamaDelay=settings.iqamaDelay||{};
+  settings.audioUrl=settings.audioUrl||'';
+  KEYS.forEach(k=>{ if(settings.adhanOffset[k]==null) settings.adhanOffset[k]=0; if(settings.iqamaDelay[k]==null) settings.iqamaDelay[k]=0; });
+}
+ensureSettings();
+
+function minsToHHMM(m){ m=((m%1440)+1440)%1440; const h=Math.floor(m/60); const mm=m%60; return (h<10?'0':'')+h+':'+(mm<10?'0':'')+mm; }
+function parseHHMM(s){ const p=s.split(':'); return (+p[0])*60+(+p[1]); }
+function applyUrl(){ const u=document.getElementById('audioUrl').value.trim(); if(u){ settings.audioUrl=u; localStorage.setItem('prayerSettings', JSON.stringify(settings)); document.getElementById('adhanAudio').src=u; document.getElementById('saveStatus').textContent='تم حفظ رابط الصوت.'; document.getElementById('saveStatus').className='ok'; } }
+
+async function fetchTimes(lat,lng){
+  document.getElementById('locInfo').textContent='جاري جلب الأوقات...';
+  const now=new Date();
+  const dd=String(now.getDate()).padStart(2,'0');
+  const mm=String(now.getMonth()+1).padStart(2,'0');
+  const url=`https://api.aladhan.com/v1/timings/${dd}-${mm}-${now.getFullYear()}?latitude=${lat}&longitude=${lng}&method=4`;
+  const r=await fetch(url); const j=await r.json();
+  base={lat,lng,date:now.toDateString(),timings:j.data.timings};
+  localStorage.setItem('prayerBase', JSON.stringify(base));
+  document.getElementById('locInfo').textContent='Latitude: '+lat.toFixed(4)+', Longitude: '+lng.toFixed(4)+' | آخر تحديث: '+now.toLocaleString('ar-SA');
+  render();
+}
+
+function detectLocation(){
+  if(!navigator.geolocation){ alert('لا geography GPS'); return; }
+  document.getElementById('locInfo').textContent=' locating...';
+  navigator.geolocation.getCurrentPosition(p=>fetchTimes(p.coords.latitude,p.coords.longitude),e=>document.getElementById('locInfo').textContent='تعذر تحديد الموقع. جرّب Mecca.');
+}
+
+function useDefault(){ fetchTimes(21.4225,39.8262); }
+
+function renderConfig(){
+  let html='<table style="width:100%;border-collapse:collapse;text-align:center"><tr><th>الصلاة</th><th>تعديل الأذان (د)</th><th>تأخير الإقامة (د)</th></tr>';
+  KEYS.forEach(k=>{
+    html+=`<tr><td>${NAMES[k]}</td><td><input type="number" data-k="${k}" data-type="adhan" value="${settings.adhanOffset[k]}" step="1" min="-30" max="30"></td><td><input type="number" data-k="${k}" data-type="iqama" value="${settings.iqamaDelay[k]}" step="1" min="0" max="60"></td></tr>`;
+  });
+  html+='</table>';
+  document.getElementById('config').innerHTML=html;
+}
+
+function renderTimes(){
+  const el=document.getElementById('timesTable'); if(!el) return;
+  if(!base){ el.innerHTML='<tr><td>لا توجد أوقات after fetch موقع.</td></tr>'; return; }
+  let html='<tr><th>الصلاة</th><th>أذان (معدل)</th><th>إقامة</th></tr>';
+  KEYS.forEach(k=>{
+    const baseMin=parseHHMM(base.timings[k]);
+    const adj=baseMin+(settings.adhanOffset[k]||0);
+    const iq=adj+(settings.iqamaDelay[k]||0);
+    const iqStr=(settings.iqamaDelay[k]||0)>0 ? minsToHHMM(iq) : '--';
+    html+=`<tr><td>${NAMES[k]}</td><td>${minsToHHMM(adj)}</td><td>${iqStr}</td></tr>`;
+  });
+  el.innerHTML=html;
+}
+
+function render(){
+  renderTimes();
+  renderConfig();
+  document.getElementById('audioUrl').value=settings.audioUrl||'';
+  if(settings.audioUrl) document.getElementById('adhanAudio').src=settings.audioUrl;
+  if(settings.autoAdhan){ document.getElementById('saveStatus').textContent='الأذان التلقائي enabled.'; document.getElementById('saveStatus').className='ok'; }
+}
+
+function saveSettings(){
+  document.querySelectorAll('#config input').forEach(inp=>{
+    const k=inp.getAttribute('data-k'), t=inp.getAttribute('data-type');
+    const v=parseInt(inp.value||0);
+    if(t==='adhan') settings.adhanOffset[k]=v;
+    if(t==='iqama') settings.iqamaDelay[k]=v;
+  });
+  localStorage.setItem('prayerSettings', JSON.stringify(settings));
+  renderTimes();
+  document.getElementById('saveStatus').textContent='تم حفظ الإعدادات.';
+  document.getElementById('saveStatus').className='ok';
+}
+
+function testSound(){
+  const a=document.getElementById('adhanAudio');
+  a.currentTime=0;
+  a.play().then(()=>{ document.getElementById('soundStatus').textContent='الصوت يلعب (ملاحظة: إن browser يمنع auto-play، interact required)'; document.getElementById('soundStatus').className='ok'; })
+  .catch(err=>{ document.getElementById('soundStatus').textContent='تعذر تشغيل الصوت: '+err.message; document.getElementById('soundStatus').className='warn'; });
+}
+
+function enableAuto(){
+  settings.autoAdhan=true;
+  localStorage.setItem('prayerSettings', JSON.stringify(settings));
+  document.getElementById('saveStatus').textContent='تم تمكين الأذان التلقائي. (Keep page open)';
+  document.getElementById('saveStatus').className='ok';
+  // unlock audio
+  const a=document.getElementById('adhanAudio'); a.play().then(()=>{a.pause(); a.currentTime=0;}).catch(()=>{});
+}
+
+function tick(){
+  const now=new Date();
+  const cur=now.getHours()*60+now.getMinutes();
+  const dstr=now.toDateString();
+  if(lastCheckDate!==dstr){ lastCheckDate=dstr; lastPlayed={}; /* refresh if day changed */
+    if(base){ fetchTimes(base.lat, base.lng).catch(()=>{}); }
+  }
+  if(!settings.autoAdhan || !base) return;
+  KEYS.forEach(k=>{
+    const baseMin=parseHHMM(base.timings[k]);
+    const adj=baseMin+(settings.adhanOffset[k]||0);
+    if(cur===adj && !lastPlayed[k]){
+      lastPlayed[k]=true;
+      const a=document.getElementById('adhanAudio'); a.currentTime=0; a.play().catch(()=>{});
+    }
+  });
+}
+setInterval(tick, 15000);
+
+// initialize
+base=JSON.parse(localStorage.getItem('prayerBase')||'null');
+ensureSettings();
+if(base){ document.getElementById('locInfo').textContent='Latitude: '+base.lat.toFixed(4)+', Longitude: '+base.lng.toFixed(4); }
+render();
+if(!base){ detectLocation(); }
+</script>
+</body>
+</html>

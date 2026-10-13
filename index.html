@@ -67,6 +67,7 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 
 <nav>
   <button class="active" onclick="show('quran',this)">📖 القرآن الكريم</button>
+  <button onclick="show('prayer',this)">🕌 أوقات الصلاة</button>
   <button onclick="show('athkar',this)">📿 الأذكار</button>
   <button onclick="show('hadith',this)">🕋 الأحاديث</button>
   <button onclick="show('calendar',this)">📅 التقويم</button>
@@ -86,6 +87,17 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
   </div>
 <div id="tafsirBar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--main-dark);color:#fff;padding:14px 20px;text-align:center;z-index:99;box-shadow:0 -3px 10px rgba(0,0,0,.3)" onmouseleave="hideTafsir()"><b>📖 الشرح: </b><span id="tafsirText"></span></div>
   <div class="grid" id="surasGrid"></div>
+</section>
+
+<!-- أوقات الصلاة -->
+<section id="prayer">
+  <h2>أوقات الصلاة</h2>
+  <div class="card" id="prayerSummary">
+    <p style="text-align:center">⏳ جاري التحميل...</p>
+  </div>
+  <p style="text-align:center;margin-top:8px">
+    <a href="prayer.html" style="display:inline-block;background:var(--main);color:#fff;padding:8px 18px;border-radius:20px;text-decoration:none">فتح صفحة الضبط (أوقات الصلاة + Adhan + iqama + location)</a>
+  </p>
 </section>
 
 <!-- الأذكار -->
@@ -516,6 +528,48 @@ hadithTexts.push(
 'bad2 placeholder',
 'bad3 placeholder'
 );
+/* ===== أوقات الصلاة (ملخص) ===== */
+function minsToHHMM(m){ m=((m%1440)+1440)%1440; const h=Math.floor(m/60); const mm=m%60; return (h<10?'0':'')+h+':'+(mm<10?'0':'')+mm; }
+const PRAYER_NAMES={Fajr:'الفجر',Dhuhr:'الظهر',Asr:'العصر',Maghrib:'المغرب',Isha:'العشاء'};
+async function updatePrayerLocation(){
+  if(!navigator.geolocation){ alert('لا يدعم المتصفح تحديد الموقع'); return; }
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat=pos.coords.latitude, lng=pos.coords.longitude;
+    try{
+      const now=new Date();
+      const dd=String(now.getDate()).padStart(2,'0');
+      const mm=String(now.getMonth()+1).padStart(2,'0');
+      const url=`https://api.aladhan.com/v1/timings/${dd}-${mm}-${now.getFullYear()}?latitude=${lat}&longitude=${lng}&method=4`;
+      const r=await fetch(url); const j=await r.json();
+      localStorage.setItem('prayerBase', JSON.stringify({lat,lng, date:now.toDateString(), timings:j.data.timings}));
+      loadPrayerSummary();
+    }catch(e){ alert('تعذر fetch الأوقات'); }
+  },()=>alert('تعذر تحديد الموقع'));
+}
+function loadPrayerSummary(){
+  const el=document.getElementById('prayerSummary'); if(!el) return;
+  const s=JSON.parse(localStorage.getItem('prayerSettings')||'null')||{adhanOffset:{},iqamaDelay:{}};
+  const base=JSON.parse(localStorage.getItem('prayerBase')||'null');
+  const timings = base && base.timings ? base.timings : null;
+  if(!timings){
+    el.innerHTML='<p style="text-align:center">حدّد موقعك للحصول على الأوقات.</p><button onclick="updatePrayerLocation()" style="background:var(--main);color:#fff;border:none;padding:8px 16px;border-radius:20px;cursor:pointer">تحديد موقع (GPS)</button>';
+    return;
+  }
+  let html='<table style="width:100%;border-collapse:collapse;text-align:center">';
+  html+='<tr style="background:var(--accent)"><th>الصلاة</th><th>الأذان</th><th>الإقامة</th></tr>';
+  for(const k of ['Fajr','Dhuhr','Asr','Maghrib','Isha']){
+    const a=parseInt(timings[k].split(':')[0])*60+parseInt(timings[k].split(':')[1]);
+    const adj=a + (s.adhanOffset&&s.adhanOffset[k]?s.adhanOffset[k]:0);
+    const iq = adj + (s.iqamaDelay&&s.iqamaDelay[k]?s.iqamaDelay[k]:0);
+    const iqStr = (s.iqamaDelay && (s.iqamaDelay[k]||0)>0) ? minsToHHMM(iq) : '--';
+    html+=`<tr><td>${PRAYER_NAMES[k]}</td><td>${minsToHHMM(adj)}</td><td>${iqStr}</td></tr>`;
+  }
+  html+='</table>';
+  html+='<button onclick="updatePrayerLocation()" style="margin-top:10px;background:var(--main);color:#fff;border:none;padding:8px 16px;border-radius:20px;cursor:pointer">تحديث الموقع (GPS)</button>';
+  el.innerHTML=html;
+}
+loadPrayerSummary();
+
 buildCalendar();
 </script>
 </body>
