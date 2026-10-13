@@ -42,7 +42,19 @@ main{max-width:820px;margin:24px auto;padding:0 15px}
 .footer{text-align:center;padding:18px;background:var(--main-dark);color:#fff;margin-top:36px}
 @media (max-width:600px){header h1{font-size:1.8rem} body{font-size:92%} nav button{padding:6px 12px;font-size:.85rem} main{padding:0 10px} .card{padding:12px} #splash img{width:85%}}
 </style>
-</head>
+<script>
+(function(){
+  var V='7b613d5';
+  if(localStorage.getItem('rawdatVer')!==V){
+    localStorage.setItem('rawdatVer',V);
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister();}); location.reload();});
+      return;
+    }
+    location.reload();
+  }
+})();
+</script>`n</head>
 <body>
 <header>
   <h1>أسئلة دينية</h1>
