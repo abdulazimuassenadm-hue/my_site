@@ -66,7 +66,9 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 </header>
 
 <nav>
-  <button class="active" onclick="show('quran',this)">📖 القرآن الكريم</button>
+  <button class="active" onclick="location.href='second.html'">☰ الأقسام (صفحة 2)</button>
+  <button class="active" onclick="show('prayer',this)">🕌 أوقات الصلاة (الصفحة 1)</button>
+  <button onclick="show('quran',this)">📖 القرآن الكريم</button>
   <button onclick="show('prayer',this)">🕌 أوقات الصلاة</button>
   <button onclick="show('athkar',this)">📿 الأذكار</button>
   <button onclick="show('hadith',this)">🕋 الأحاديث</button>
@@ -78,7 +80,7 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 <main>
 
 <!-- سور القرآن -->
-<section id="quran" class="active">
+<section id="quran">
   <h2>سور القرآن الكريم</h2>
   <input type="text" id="searchSura" placeholder="🔍 ابحث عن سورة..." oninput="filterSuras()">
   <div class="card" style="margin:20px 0" id="suraCard">
@@ -90,7 +92,7 @@ footer{text-align:center;padding:20px;background:var(--main-dark);color:#fff;mar
 </section>
 
 <!-- أوقات الصلاة -->
-<section id="prayer">
+<section id="prayer" class="active">
 <h1>🕌 أوقات الصلاة - الضبط (أذان إلكتروني + إقامة)</h1>
 <div class="card">
   <h2>الموقع</h2>
