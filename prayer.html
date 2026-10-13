@@ -80,9 +80,10 @@ async function fetchTimes(lat,lng){
   const mm=String(now.getMonth()+1).padStart(2,'0');
   const url=`https://api.aladhan.com/v1/timings/${dd}-${mm}-${now.getFullYear()}?latitude=${lat}&longitude=${lng}&method=4`;
   const r=await fetch(url); const j=await r.json();
-  base={lat,lng,date:now.toDateString(),timings:j.data.timings};
+  base={lat,lng,date:now.toDateString(),timings:j.data.timings, place};
   localStorage.setItem('prayerBase', JSON.stringify(base));
-  document.getElementById('locInfo').textContent='Latitude: '+lat.toFixed(4)+', Longitude: '+lng.toFixed(4)+' | آخر تحديث: '+now.toLocaleString('ar-SA');
+  const place = await (async()=>{try{const rg=await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lng+'&accept-language=ar&zoom=10',{headers:{'User-Agent':'prayer-app'}});const rj=await rg.json();const a=rj.address||{};const name=a.state||a.province||a.region||a.city||a.town||a.county||'';const country=a.country||'';return (name?name+', ':'')+country;}catch(e){return '';}})();
+document.getElementById('locInfo').textContent=(place||(''+lat.toFixed(2)+', '+lng.toFixed(2)))+' | آخر تحديث: '+now.toLocaleString('ar-SA');
   render();
 }
 
@@ -176,7 +177,7 @@ setInterval(tick, 15000);
 // initialize
 base=JSON.parse(localStorage.getItem('prayerBase')||'null');
 ensureSettings();
-if(base){ document.getElementById('locInfo').textContent='Latitude: '+base.lat.toFixed(4)+', Longitude: '+base.lng.toFixed(4); }
+if(base){ document.getElementById('locInfo').textContent=(base.place||(base.lat.toFixed(4)+', '+base.lng.toFixed(4)))+' | آخر تحديث: '+(base.date||''); }
 render();
 if(!base){ detectLocation(); }
 </script>
