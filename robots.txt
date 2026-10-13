@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://abdulazimuassenadm-hue.github.io/my_site/sitemap.xml
