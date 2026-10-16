@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>روضة الإيمان</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#6c5b7b">
+<meta name="theme-color" content="#b89b5e">
 <link rel="apple-touch-icon" sizes="180x180" href="icon192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&family=Marhey:wght@400;600&display=swap" rel="stylesheet">
@@ -36,12 +36,12 @@ section{display:none;animation:fade .4s}
 section.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
 h2{color:var(--main);border-bottom:2px solid var(--accent);padding-bottom:8px;margin-bottom:20px;text-align:center}
-.card{background:var(--card);border:1px solid #e5e0ed;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-input,select{width:100%;padding:10px;border:1px solid #b9a7d1;border-radius:10px;margin:8px 0;font-size:1rem;background:#fff}
+.card{background:var(--card);border:1px solid #cfe8dc;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+input,select{width:100%;padding:10px;border:1px solid #7fbf9b;border-radius:10px;margin:8px 0;font-size:1rem;background:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:15px}
 .sura{background:#ffffff;color:#111111;border-bottom:1px dotted #999;padding:10px 6px;cursor:pointer;transition:.3s;display:flex;justify-content:space-between;font-size:1.15rem}
-.sura:hover{background:#eee8f4;color:#000;padding-right:14px}
-.sura span{color:#5a5366;font-size:.9rem}
+.sura:hover{background:#e5f0eb;color:#000;padding-right:14px}
+.sura span{color:#3a3527;font-size:.9rem}
 #surasGrid{display:grid;grid-template-columns:1fr;margin-top:15px}
 .list-item{background:var(--card);border-right:4px solid var(--accent);padding:12px 16px;margin:10px 0;border-radius:8px}
 .counter{display:inline-block;background:var(--accent);color:var(--main-dark);border-radius:20px;padding:2px 12px;margin-bottom:6px;font-size:.85rem}
@@ -70,7 +70,7 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
 <!-- شاشة البداية -->
 <div id="splash" style="position:fixed;inset:0;background:#6e6241;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s">
   <img src="cover.png?v=4" style="width:70%;max-width:340px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.4)">
-  <p style="color:#e5e0ed;margin-top:18px;font-size:1.3rem;font-weight:300">المخرج: عبدالعظيم ياسين</p>
+  <p style="color:#cfe8dc;margin-top:18px;font-size:1.3rem;font-weight:300">المخرج: عبدالعظيم ياسين</p>
 </div>
 <script>setTimeout(()=>{document.getElementById('splash').style.opacity='0';setTimeout(()=>document.getElementById('splash').remove(),1000)},2500);</script>
 
@@ -111,7 +111,7 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
 </div>
 <div class="card">
   <h2>ضبط لكل صلاة</h2>
-  <p style="text-align:center;font-size:.9rem;color:#5a5366">التعديل على الأذان (دقائق) | التأخير/الإقامة (دقائق)</p>
+  <p style="text-align:center;font-size:.9rem;color:#3a3527">التعديل على الأذان (دقائق) | التأخير/الإقامة (دقائق)</p>
   <div id="config"></div>
   <p style="text-align:center;margin-top:14px">
     <button onclick="saveSettings()">حفظ الإعدادات</button>
@@ -123,7 +123,7 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
   <input id="audioUrl" style="width:100%" placeholder="https://...mp3" />
   <button class="alt" onclick="applyUrl()">تطبيق/حفظ رابط</button>
 </div>
-<p style="text-align:center;margin-top:18px"><a href="index.html" style="color:#6c5b7b">‹ العودة للصفحة الرئيسية</a></p>
+<p style="text-align:center;margin-top:18px"><a href="index.html" style="color:#b89b5e">‹ العودة للصفحة الرئيسية</a></p>
 <script>
 const KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
 const NAMES={Fajr:'الفجر',Dhuhr:'الظهر',Asr:'العصر',Maghrib:'المغرب',Isha:'العشاء'};
