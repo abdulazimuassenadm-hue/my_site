@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rawdat-al-iman-v1';
+﻿const CACHE_NAME = 'rawdat-al-iman-v2';
 const PRECACHE = [
   '/my_site/',
   '/my_site/index.html',
