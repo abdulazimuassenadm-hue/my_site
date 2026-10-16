@@ -68,7 +68,7 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
 <p style="text-align:center;padding:6px">
   <button onclick="location.href='index.html'" style="position:fixed;top:14px;right:14px;z-index:1001;background:#7fbf9b;border:1px solid #67a883;color:#1f4d3a;border-radius:25px;padding:8px 14px;cursor:pointer;font-size:1rem;box-shadow:0 2px 8px rgba(0,0,0,.15)">‹ رجوع</button>
 </p>
-<p style="text-align:center;background:#4e3f5c;padding:8px"><a href="index.html" style="color:#b9a7d1;text-decoration:none">‹ رجوع للصفحة الأولى (Prayer / Adhan)</a></p
+<p style="text-align:center;background:#4e3f5c;padding:8px"><a href="index.html" style="color:#b9a7d1;text-decoration:none">‹ رجوع للصفحة الأولى (الصلاة / الأذان)</a></p
 
 <!-- شاشة البداية -->
 <div id="splash" style="position:fixed;inset:0;background:#6e6241;z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 1s">
@@ -90,13 +90,13 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
 <div class="card" style="margin:6px 0;padding:10px">
   <h3 style="text-align:center;color:var(--main)">فهرس الأقسام</h3>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
-    <button class="active" onclick="show('quran',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">📖 Quran - القرآن الكريم</button>
+    <button class="active" onclick="show('quran',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">📖 القرآن الكريم</button>
     <button onclick="show('prayer',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">🕌 أوقات الصلاة</button>
-    <button onclick="show('athkar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">📿 Azkar - الأذكار</button>
-    <button onclick="show('hadith',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333"> decking Hadith - الأحاديث</button>
-    <button onclick="show('calendar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333"> decking Calendar - التقويم</button>
-    <button onclick="show('qibla',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333"> decking Qibla - القبلة</button>
-    <button onclick="show('settings',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">⚙️ Settings - الإعدادات</button>
+    <button onclick="show('athkar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">📿 الأذكار</button>
+    <button onclick="show('hadith',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">📜 الأحاديث</button>
+    <button onclick="show('calendar',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">📅 التقويم</button>
+    <button onclick="show('qibla',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">🧭 القبلة</button>
+    <button onclick="show('settings',this)" style="width:100%;border-radius:10px;padding:6px;font-size:.85rem;background:#eee8f4;color:#333">⚙️ الإعدادات</button>
   </div>
 </div>
 
@@ -714,11 +714,8 @@ hadithTexts.push(
 'أَفْشُوا السَّلَامَ — مسلم',
 'الأَكْلُ بِالشَّمَالِ يَاء إبليس — مسلم',
 'لا تَمْسَحُ يَدَّكَ حتى تتنفل — البخاري',
-'ipation placeholder',
 'اللهم إني أسألُك خير Both worlds — nasal',
 'اللهم إني أسألك تطهⁱه — nasal',
-'bad2 placeholder',
-'bad3 placeholder'
 );
 /* ===== أوقات الصلاة (ملخص) ===== */
 function minsToHHMM(m){ m=((m%1440)+1440)%1440; const h=Math.floor(m/60); const mm=m%60; return (h<10?'0':'')+h+':'+(mm<10?'0':'')+mm; }
