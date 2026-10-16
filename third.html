@@ -6,7 +6,7 @@
 <meta http-equiv="Expires" content="0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أسئلة دينية | قصص الأنبياء — روضة الإيمان</title>
+<title>أسئلة دينية — روضة الإيمان</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#b89b5e">
 <link rel="apple-touch-icon" sizes="180x180" href="icon192.png">
@@ -63,7 +63,7 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
 <body>
 <header>
   <h1>أسئلة دينية</h1>
-  <p>قصص الأنبياء — اختيار من متعدد</p>
+<p>متنوعة — اختيار من متعدد (102)</p>
 </header>
 <nav>
   <a href="index.html">الصفحة الرئيسية</a>
@@ -73,7 +73,7 @@ main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
   <div id="quiz" class="card"></div>
 </main>
 <footer>
-  <p>أسئلة دينية — قصص الأنبياء</p>
+<p>أسئلة دينية — روضة الإيمان</p>
 </footer>
 <script>
 const Q = [
@@ -237,7 +237,7 @@ function next(){
   else {
     box.innerHTML = '<h3 class="q-title">انتهى الاختبار</h3>'
       + '<p style="text-align:center;font-size:1.4rem;margin:18px 0">النتيجة: ' + score + ' / ' + Q.length + '</p>'
-      + '<p style="text-align:center;color:#5a5366;margin-bottom:16px">' + (score >= 15 ? 'ما شاء الله! معرفة جيدة لقصص الأنبياء.' : 'تابع دراسة قصص الأنبياء لزيادة المعرفة.') + '</p>'
+      + '<p style="text-align:center;color:#5a5366;margin-bottom:16px">' + (score >= 50 ? 'ما شاء الله! معرفة جيدة.' : 'تابع الدراسة لزيادة المعرفة.') + '</p>'
       + '<div style="text-align:center"><button class="btn" onclick="restart()">إعادة الاختبار</button> <a class="btn alt" href="index.html" style="display:inline-block;text-decoration:none">الرئيسية</a></div>';
   }
 }
