@@ -13,10 +13,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="روضة الإيمان">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <script>
 (function(){
-  var V='2026-10-17-pwa-final';
+  var V='2026-10-18-pwa-final-v7';
   if(localStorage.getItem('rawdatVer')!==V){
     localStorage.setItem('rawdatVer',V);
     if('serviceWorker' in navigator){
@@ -71,7 +74,7 @@ main,section,:root{--main:#E5C878;--main-dark:#8C7940;--accent:#009B70;--bg:#003
 <div class="card">
   <h2>أوقات اليوم (مع التعديل)</h2>
   <table id="timesTable"></table>
-  <audio id="adhanAudio" src="https://www.islamcan.com/audio/adhan/azan1.mp3" preload="auto"></audio>
+  <audio id="adhanAudio" src="https://www.islamcan.com/audio/adhan/azan1.mp3" preload="none"></audio>
   <p style="margin-top:10px;text-align:center">
     <button onclick="testSound()">اختبار صوت المؤذن</button>
     <button class="alt" onclick="enableAuto()">تمكين الأذان تلقائياً</button>
