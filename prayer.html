@@ -6,8 +6,31 @@
 <link rel="canonical" href="https://abdulazimuassenadm-hue.github.io/my_site/prayer.html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أوقات الصلاة — روضة الإيمان</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#009B70">
+<link rel="apple-touch-icon" sizes="192x192" href="icon192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="روضة الإيمان">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
+<script>
+(function(){
+  var V='2026-10-17-pwa-final';
+  if(localStorage.getItem('rawdatVer')!==V){
+    localStorage.setItem('rawdatVer',V);
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister();}); location.reload();});
+      return;
+    }
+    location.reload();
+  }
+})();
+</script>
+<script>
+if('serviceWorker' in navigator && location.hostname === 'abdulazimuassenadm-hue.github.io'){ navigator.serviceWorker.register('sw.js', { scope: '/my_site/' }); }
+</script>
+<style><style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 body{background:#f8f4ea;color:#333;line-height:1.8;padding:18px}
 h1,h2{color:#5c6e58;text-align:center;margin:18px 0}

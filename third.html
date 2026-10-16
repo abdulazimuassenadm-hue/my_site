@@ -11,7 +11,11 @@
 <title>أسئلة دينية — روضة الإيمان</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#009B70">
-<link rel="apple-touch-icon" sizes="180x180" href="icon192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="روضة الإيمان">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -64,7 +68,7 @@ main,section,:root{--main:#E5C878;--main-dark:#8C7940;--accent:#009B70;--bg:#003
 </style>
 <script>
 (function(){
-  var V='2026-10-17-darkemerald';
+  var V='2026-10-17-pwa-final';
   if(localStorage.getItem('rawdatVer')!==V){
     localStorage.setItem('rawdatVer',V);
     if('serviceWorker' in navigator){
