@@ -15,12 +15,12 @@
 <style>
 /* ===== الألوان والأساسيات (يمكنك تعديلها بسهولة) ===== */
 :root{
-  --main:#b89b5e;
-  --main-dark:#8a7a4f;
-  --accent:#e8d9b0;
-  --bg:#faf7f0;
-  --card:#ffffff;
-  --text:#3a3527;
+  --main:#E5C878;
+  --main-dark:#8C7940;
+  --accent:#009B70;
+  --bg:#003B2F;
+  --card:#062F26;
+  --text:#F1F3E9;
   --font-main:'Amiri',serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-main)}
@@ -52,11 +52,25 @@ footer{text-align:center;padding:20px;background:#8a7a4f;color:#fff;margin-top:4
 .cal-grid .day{background:var(--main);color:#fff;font-weight:bold}
 .cal-grid .today{background:var(--accent);color:var(--main-dark);font-weight:bold}
 @media (max-width:600px){body{font-size:92%}header{padding:20px 10px}header h1{font-size:1.8rem}nav{padding:8px}nav button{padding:6px 12px;font-size:.85rem}main{margin:15px auto;padding:0 10px}.card{padding:12px}#splash img{width:85%!important;max-width:85%}}
-main,section{--main:#5f8f7a;--main-dark:#466c5f;--accent:#a8c5b6}
+main,section{--main:#E5C878;--main-dark:#8C7940;--accent:#a8c5b6}
+
+/* theme overrides (colors only) */
+html,body{background:#003B2F !important;color:#F1F3E9 !important}
+header,header h1{background:linear-gradient(135deg,#003B2F,#001D18) !important;background-color:#003B2F !important;color:#E5C878 !important}
+nav,nav *{background-color:inherit; color:#F1F3E9 !important}
+nav button,nav a,.btn{background:#009B70 !important;color:#F1F3E9 !important;border-color:#8C7940 !important}
+nav button:hover,nav button.active,nav button:focus,.btn:hover{background:#8C7940 !important;color:#001D18 !important}
+main,section,main section,.card,.sura,.sura:hover,input,select,.opt,.list-item,.cal-grid div,.counter{background:#062F26 !important;color:#F1F3E9 !important;border-color:#8C7940 !important}
+h1,h2,h3,.q-title,.counter{color:#E5C878 !important}
+a{color:#E5C878 !important}
+footer{background:#315F54 !important;color:#F1F3E9 !important}
+.opt.correct{background:#009B70 !important;color:#F1F3E9 !important}
+.opt.wrong{background:#315F54 !important;color:#F1F3E9 !important}
+main,section,:root{--main:#E5C878;--main-dark:#8C7940;--accent:#009B70;--bg:#003B2F;--card:#062F26;--text:#F1F3E9}
 </style>
 <script>
 (function(){
- var V='2026-10-17-color';
+ var V='2026-10-17-darkemerald';
  if(localStorage.getItem('rawdatVer')!==V){
  localStorage.setItem('rawdatVer',V);
  if('serviceWorker' in navigator){ navigator.serviceWorker.getRegistrations().then(function(regs){regs.forEach(function(r){r.unregister();}); location.reload();}); return; }
